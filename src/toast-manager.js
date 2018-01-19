@@ -27,10 +27,10 @@ var ToastsManager = (function () {
                 // get app root view component ref
                 if (!_this._rootViewContainerRef) {
                     try {
-                        _this._rootViewContainerRef = _this.appRef['_rootComponents'][0]['_hostElement'].vcRef;
+                        _this._rootViewContainerRef = _this.appRef["_rootComponents"][0]["_hostElement"].vcRef;
                     }
                     catch (e) {
-                        reject(new Error('Please set root ViewContainerRef using setRootViewContainerRef(vRef: ViewContainerRef) method.'));
+                        reject(new Error("Please set root ViewContainerRef using setRootViewContainerRef(vRef: ViewContainerRef) method."));
                     }
                 }
                 // get options providers
@@ -106,28 +106,28 @@ var ToastsManager = (function () {
     };
     ToastsManager.prototype.error = function (message, title, options) {
         var data = options && options.data ? options.data : null;
-        var toast = new toast_1.Toast('error', message, title, data);
+        var toast = new toast_1.Toast("error", message, title, data);
         return this.show(toast, options);
     };
     ToastsManager.prototype.info = function (message, title, options) {
         var data = options && options.data ? options.data : null;
-        var toast = new toast_1.Toast('info', message, title, data);
+        var toast = new toast_1.Toast("info", message, title, data);
         return this.show(toast, options);
     };
     ToastsManager.prototype.success = function (message, title, options) {
         var data = options && options.data ? options.data : null;
-        var toast = new toast_1.Toast('success', message, title, data);
+        var toast = new toast_1.Toast("success", message, title, data);
         return this.show(toast, options);
     };
     ToastsManager.prototype.warning = function (message, title, options) {
         var data = options && options.data ? options.data : null;
-        var toast = new toast_1.Toast('warning', message, title, data);
+        var toast = new toast_1.Toast("warning", message, title, data);
         return this.show(toast, options);
     };
     // allow user define custom background color and image
     ToastsManager.prototype.custom = function (message, title, options) {
         var data = options && options.data ? options.data : null;
-        var toast = new toast_1.Toast('custom', message, title, data);
+        var toast = new toast_1.Toast("custom", message, title, data);
         return this.show(toast, options);
     };
     return ToastsManager;

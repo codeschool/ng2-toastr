@@ -114,7 +114,7 @@ System.registerDynamic("ng2-toastr/src/toast-container.component", ["@angular/co
     type: core_1.Component,
     args: [{
       selector: 'toast-container',
-      template: "\n    <div #toastContainer id=\"toast-container\" [style.position]=\"position\" class=\"{{positionClass}}\">\n      <div *ngFor=\"let toast of toasts\" [@inOut]=\"animate\" (@inOut.done)=\"onAnimationEnd($event)\" class=\"toast toast-{{toast.type}}\" \n      (click)=\"clicked(toast)\">\n        <div class=\"toast-close-button\" *ngIf=\"toast.config.showCloseButton\" (click)=\"removeToast(toast)\">&times;\n        </div> \n        <div *ngIf=\"toast.title\" class=\"{{toast.config.titleClass || titleClass}}\">{{toast.title}}</div>\n        <div [ngSwitch]=\"toast.config.enableHTML\">\n          <span *ngSwitchCase=\"true\" class=\"{{toast.config.messageClass || messageClass}}\" [innerHTML]=\"sanitizer.bypassSecurityTrustHtml(toast.message)\"></span>\n          <span *ngSwitchDefault class=\"{{toast.config.messageClass || messageClass}}\">{{toast.message}}</span>\n        </div>             \n      </div>\n    </div>\n    ",
+      template: "\n    <div #toastContainer id=\"toast-container\" [style.position]=\"position\" class=\"{{positionClass}}\">\n      <div *ngFor=\"let toast of toasts\" [@inOut]=\"animate\" (@inOut.done)=\"onAnimationEnd($event)\" class=\"toast toast-{{toast.type}}\" \n      (click)=\"clicked(toast)\">\n        <svg *ngIf=\"toast.config.icon\" attr.class=\"toast-icon toast-icon-{{ toast.config.icon }}\" width=\"35\" height=\"35\">\n          <use attr.xlink:href=\"#icon-{{ toast.config.icon }}\"/>\n        </svg>\n        <div class=\"toast-content\">\n          <div *ngIf=\"toast.title\" class=\"{{toast.config.titleClass || titleClass}}\">{{toast.title}}</div>\n          <div [ngSwitch]=\"toast.config.enableHTML\">\n            <span *ngSwitchCase=\"true\" class=\"{{toast.config.messageClass || messageClass}}\" [innerHTML]=\"sanitizer.bypassSecurityTrustHtml(toast.message)\"></span>\n            <span *ngSwitchDefault class=\"{{toast.config.messageClass || messageClass}}\">{{toast.message}}</span>\n          </div>\n        </div>\n        <div class=\"toast-close-button\" *ngIf=\"toast.config.showCloseButton\" (click)=\"removeToast(toast)\">&times;\n        </div>\n      </div>\n    </div>\n    ",
       animations: [core_1.trigger('inOut', [core_1.state('flyRight, flyLeft', core_1.style({
         opacity: 1,
         transform: 'translateX(0)'
@@ -175,7 +175,8 @@ System.registerDynamic("ng2-toastr/src/toast", [], true, function($__require, ex
         titleClass: '',
         messageClass: '',
         toastLife: 3000,
-        showCloseButton: false
+        showCloseButton: false,
+        icon: ''
       };
     }
     return Toast;
@@ -218,9 +219,9 @@ System.registerDynamic("ng2-toastr/src/toast-manager", ["@angular/core", "./toas
         if (!_this.container) {
           if (!_this._rootViewContainerRef) {
             try {
-              _this._rootViewContainerRef = _this.appRef['_rootComponents'][0]['_hostElement'].vcRef;
+              _this._rootViewContainerRef = _this.appRef["_rootComponents"][0]["_hostElement"].vcRef;
             } catch (e) {
-              reject(new Error('Please set root ViewContainerRef using setRootViewContainerRef(vRef: ViewContainerRef) method.'));
+              reject(new Error("Please set root ViewContainerRef using setRootViewContainerRef(vRef: ViewContainerRef) method."));
             }
           }
           var providers = core_1.ReflectiveInjector.resolve([{
@@ -299,27 +300,27 @@ System.registerDynamic("ng2-toastr/src/toast-manager", ["@angular/core", "./toas
     };
     ToastsManager.prototype.error = function(message, title, options) {
       var data = options && options.data ? options.data : null;
-      var toast = new toast_1.Toast('error', message, title, data);
+      var toast = new toast_1.Toast("error", message, title, data);
       return this.show(toast, options);
     };
     ToastsManager.prototype.info = function(message, title, options) {
       var data = options && options.data ? options.data : null;
-      var toast = new toast_1.Toast('info', message, title, data);
+      var toast = new toast_1.Toast("info", message, title, data);
       return this.show(toast, options);
     };
     ToastsManager.prototype.success = function(message, title, options) {
       var data = options && options.data ? options.data : null;
-      var toast = new toast_1.Toast('success', message, title, data);
+      var toast = new toast_1.Toast("success", message, title, data);
       return this.show(toast, options);
     };
     ToastsManager.prototype.warning = function(message, title, options) {
       var data = options && options.data ? options.data : null;
-      var toast = new toast_1.Toast('warning', message, title, data);
+      var toast = new toast_1.Toast("warning", message, title, data);
       return this.show(toast, options);
     };
     ToastsManager.prototype.custom = function(message, title, options) {
       var data = options && options.data ? options.data : null;
-      var toast = new toast_1.Toast('custom', message, title, data);
+      var toast = new toast_1.Toast("custom", message, title, data);
       return this.show(toast, options);
     };
     return ToastsManager;
@@ -353,6 +354,7 @@ System.registerDynamic("ng2-toastr/src/toast-options", ["@angular/core"], true, 
       this.messageClass = 'toast-message';
       this.titleClass = 'toast-title';
       this.showCloseButton = false;
+      this.icon = '';
     }
     return ToastOptions;
   }());

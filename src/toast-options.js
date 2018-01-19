@@ -14,6 +14,7 @@ var ToastOptions = (function () {
         this.messageClass = 'toast-message';
         this.titleClass = 'toast-title';
         this.showCloseButton = false;
+        this.icon = '';
     }
     return ToastOptions;
 }());

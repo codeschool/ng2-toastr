@@ -112,7 +112,7 @@ var ToastContainer = (function () {
 ToastContainer.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'toast-container',
-                template: "\n    <div #toastContainer id=\"toast-container\" [style.position]=\"position\" class=\"{{positionClass}}\">\n      <div *ngFor=\"let toast of toasts\" [@inOut]=\"animate\" (@inOut.done)=\"onAnimationEnd($event)\" class=\"toast toast-{{toast.type}}\" \n      (click)=\"clicked(toast)\">\n        <div class=\"toast-close-button\" *ngIf=\"toast.config.showCloseButton\" (click)=\"removeToast(toast)\">&times;\n        </div> \n        <div *ngIf=\"toast.title\" class=\"{{toast.config.titleClass || titleClass}}\">{{toast.title}}</div>\n        <div [ngSwitch]=\"toast.config.enableHTML\">\n          <span *ngSwitchCase=\"true\" class=\"{{toast.config.messageClass || messageClass}}\" [innerHTML]=\"sanitizer.bypassSecurityTrustHtml(toast.message)\"></span>\n          <span *ngSwitchDefault class=\"{{toast.config.messageClass || messageClass}}\">{{toast.message}}</span>\n        </div>             \n      </div>\n    </div>\n    ",
+                template: "\n    <div #toastContainer id=\"toast-container\" [style.position]=\"position\" class=\"{{positionClass}}\">\n      <div *ngFor=\"let toast of toasts\" [@inOut]=\"animate\" (@inOut.done)=\"onAnimationEnd($event)\" class=\"toast toast-{{toast.type}}\" \n      (click)=\"clicked(toast)\">\n        <svg *ngIf=\"toast.config.icon\" attr.class=\"toast-icon toast-icon-{{ toast.config.icon }}\" width=\"35\" height=\"35\">\n          <use attr.xlink:href=\"#icon-{{ toast.config.icon }}\"/>\n        </svg>\n        <div class=\"toast-content\">\n          <div *ngIf=\"toast.title\" class=\"{{toast.config.titleClass || titleClass}}\">{{toast.title}}</div>\n          <div [ngSwitch]=\"toast.config.enableHTML\">\n            <span *ngSwitchCase=\"true\" class=\"{{toast.config.messageClass || messageClass}}\" [innerHTML]=\"sanitizer.bypassSecurityTrustHtml(toast.message)\"></span>\n            <span *ngSwitchDefault class=\"{{toast.config.messageClass || messageClass}}\">{{toast.message}}</span>\n          </div>\n        </div>\n        <div class=\"toast-close-button\" *ngIf=\"toast.config.showCloseButton\" (click)=\"removeToast(toast)\">&times;\n        </div>\n      </div>\n    </div>\n    ",
                 animations: [
                     core_1.trigger('inOut', [
                         core_1.state('flyRight, flyLeft', core_1.style({ opacity: 1, transform: 'translateX(0)' })),
@@ -146,13 +146,13 @@ ToastContainer.decorators = [
                         ]),
                         core_1.transition('void => fade', [
                             core_1.style({
-                                opacity: 0,
+                                opacity: 0
                             }),
                             core_1.animate('0.3s ease-in')
                         ]),
                         core_1.transition('fade => void', [
                             core_1.animate('0.3s 10ms ease-out', core_1.style({
-                                opacity: 0,
+                                opacity: 0
                             }))
                         ]),
                         core_1.transition('void => slideDown', [
@@ -180,9 +180,9 @@ ToastContainer.decorators = [
                                 opacity: 0,
                                 transform: 'translateY(200%)'
                             }))
-                        ]),
-                    ]),
-                ],
+                        ])
+                    ])
+                ]
             },] },
 ];
 /** @nocollapse */

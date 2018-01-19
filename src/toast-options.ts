@@ -14,7 +14,7 @@ export class ToastOptions {
   messageClass: string = 'toast-message';
   titleClass: string = 'toast-title';
   showCloseButton: boolean = false;
+  icon: string = '';
 
   constructor() {}
-
 }

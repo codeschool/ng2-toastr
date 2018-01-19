@@ -9,5 +9,6 @@ export declare class ToastOptions {
     messageClass: string;
     titleClass: string;
     showCloseButton: boolean;
+    icon: string;
     constructor();
 }

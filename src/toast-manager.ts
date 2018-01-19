@@ -16,11 +16,12 @@ export class ToastsManager {
   private toastClicked: Subject<Toast> = new Subject<Toast>();
   private _rootViewContainerRef: ViewContainerRef;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver,
-              private ngZone: NgZone,
-              private appRef: ApplicationRef,
-              private options: ToastOptions) {
-  }
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private ngZone: NgZone,
+    private appRef: ApplicationRef,
+    private options: ToastOptions
+  ) {}
 
   setRootViewContainerRef(vRef: ViewContainerRef) {
     this._rootViewContainerRef = vRef;
@@ -36,21 +37,36 @@ export class ToastsManager {
         // get app root view component ref
         if (!this._rootViewContainerRef) {
           try {
-            this._rootViewContainerRef = this.appRef['_rootComponents'][0]['_hostElement'].vcRef;
+            this._rootViewContainerRef = this.appRef["_rootComponents"][0][
+              "_hostElement"
+            ].vcRef;
           } catch (e) {
-            reject(new Error('Please set root ViewContainerRef using setRootViewContainerRef(vRef: ViewContainerRef) method.'));
+            reject(
+              new Error(
+                "Please set root ViewContainerRef using setRootViewContainerRef(vRef: ViewContainerRef) method."
+              )
+            );
           }
         }
 
         // get options providers
         let providers = ReflectiveInjector.resolve([
-          {provide: ToastOptions, useValue: this.options }
+          { provide: ToastOptions, useValue: this.options }
         ]);
 
         // create and load ToastContainer
-        let toastFactory = this.componentFactoryResolver.resolveComponentFactory(ToastContainer);
-        let childInjector = ReflectiveInjector.fromResolvedProviders(providers, this._rootViewContainerRef.parentInjector);
-        this.container = this._rootViewContainerRef.createComponent(toastFactory, this._rootViewContainerRef.length, childInjector);
+        let toastFactory = this.componentFactoryResolver.resolveComponentFactory(
+          ToastContainer
+        );
+        let childInjector = ReflectiveInjector.fromResolvedProviders(
+          providers,
+          this._rootViewContainerRef.parentInjector
+        );
+        this.container = this._rootViewContainerRef.createComponent(
+          toastFactory,
+          this._rootViewContainerRef.length,
+          childInjector
+        );
         this.container.instance.onToastClicked = (toast: Toast) => {
           this._onToastClicked(toast);
         };
@@ -67,8 +83,10 @@ export class ToastsManager {
   createTimeout(toast: Toast): any {
     let task: number;
     this.ngZone.runOutsideAngular(() => {
-      task = setTimeout(() => this.ngZone.run(() => this.clearToast(toast)),
-                        toast.config.toastLife);
+      task = setTimeout(
+        () => this.ngZone.run(() => this.clearToast(toast)),
+        toast.config.toastLife
+      );
     });
 
     return task.toString();
@@ -130,34 +148,54 @@ export class ToastsManager {
     }
   }
 
-  error(message: string, title?: string, options?: any): Promise<Toast> {
+  error(
+    message: string,
+    title?: string,
+    options?: any
+  ): Promise<Toast> {
     const data = options && options.data ? options.data : null;
-    const toast = new Toast('error', message, title, data);
+    const toast = new Toast("error", message, title, data);
     return this.show(toast, options);
   }
 
-  info(message: string, title?: string, options?: any): Promise<Toast> {
+  info(
+    message: string,
+    title?: string,
+    options?: any
+  ): Promise<Toast> {
     const data = options && options.data ? options.data : null;
-    const toast = new Toast('info', message, title, data);
+    const toast = new Toast("info", message, title, data);
     return this.show(toast, options);
   }
 
-  success(message: string, title?: string, options?: any): Promise<Toast> {
+  success(
+    message: string,
+    title?: string,
+    options?: any
+  ): Promise<Toast> {
     const data = options && options.data ? options.data : null;
-    const toast = new Toast('success', message, title, data);
+    const toast = new Toast("success", message, title, data);
     return this.show(toast, options);
   }
 
-  warning(message: string, title?: string, options?: any): Promise<Toast> {
+  warning(
+    message: string,
+    title?: string,
+    options?: any
+  ): Promise<Toast> {
     const data = options && options.data ? options.data : null;
-    const toast = new Toast('warning', message, title, data);
+    const toast = new Toast("warning", message, title, data);
     return this.show(toast, options);
   }
 
   // allow user define custom background color and image
-  custom(message: string, title?: string, options?: any): Promise<Toast> {
+  custom(
+    message: string,
+    title?: string,
+    options?: any
+  ): Promise<Toast> {
     const data = options && options.data ? options.data : null;
-    const toast = new Toast('custom', message, title, data);
+    const toast = new Toast("custom", message, title, data);
     return this.show(toast, options);
   }
 }
